@@ -13,7 +13,7 @@ export function PasswordGenerate() {
 
   function HandleClick() {
     window.navigator.clipboard.writeText(text);
-    textRef.current?.select()
+    textRef.current?.select();
   }
 
   const generatePassword = useCallback(() => {
@@ -30,8 +30,8 @@ export function PasswordGenerate() {
       pass += str.charAt(random);
     }
 
-    setText(pass)
-  },[length,character,number]);
+    setText(pass);
+  }, [length, character, number]);
 
   useEffect(() => {
     generatePassword();
@@ -76,19 +76,30 @@ export function PasswordGenerate() {
           </div>
 
           <div className="flex justify-center items-center gap-2">
-            <input type="checkbox" value={number} name="" id="" defaultChecked={number}
-            onChange={()=>{
-                setNumber(prev => !prev)
-            }}
+            <input
+              type="checkbox"
+              value={number}
+              name=""
+              id=""
+              defaultChecked={number}
+              onChange={() => {
+                setNumber((prev) => !prev);
+              }}
             />
             <label htmlFor="number">Number</label>
           </div>
 
           <div className="flex justify-center items-center gap-2">
-            <input type="checkbox" value={character} name="" id="" defaultChecked={character}
-            onChange={()=>{
-                setCharacter(prev => !prev)
-            }}/>
+            <input
+              type="checkbox"
+              value={character}
+              name=""
+              id=""
+              defaultChecked={character}
+              onChange={() => {
+                setCharacter((prev) => !prev);
+              }}
+            />
             <label htmlFor="character">Character</label>
           </div>
         </div>
