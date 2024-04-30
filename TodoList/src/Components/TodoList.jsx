@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { motion } from "framer-motion";
 import AuroraBackground from "./background";
 
@@ -31,15 +31,29 @@ function TodoList() {
   
   const decrement = (index) => {
     const updatedTasks = [...tasks];
-    updatedTasks[index].number -= 1;
-    setTasks(updatedTasks);
+    if(updatedTasks[index].number > 0){
+      updatedTasks[index].number -= 1;
+      setTasks(updatedTasks);
+    }
   };
 
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  },[]);
 
-  // const handleDelete = (index) => {
-  //   let updatedTask = tasks.filter((task, idx) => idx !== index);
-  //   setTasks(updatedTask);
-  // };
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+
+
+  const handleDelete = (index) => {
+    let updatedTask = tasks.filter((task, idx) => idx !== index);
+    setTasks(updatedTask);
+  };
 
   return (
     <AuroraBackground>
@@ -89,6 +103,10 @@ function TodoList() {
                <button className="ml-[1rem] bg-red-500 p-2" onClick={() => decrement(index)}>
                  -
                </button>
+               <button className="ml-[1rem]  p-2" onClick={() => handleDelete(index)}>
+                 ❌
+               </button>
+
              </li>
             ))}
           </ul>
